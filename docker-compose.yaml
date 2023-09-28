@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  dev-database:
+    image: postgres:15.0
+    container_name: dev-database
+    ports:
+      -  5434:5432 #{port in host(myPC)} : {port in Container}
+    # environment variables, like:db's username, password...
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Abc123456789
+      POSTGRES_DB: testdb
+    networks:
+      - nestjs-network
+  #Create anothor container for "TEST"
+  test-database:
+    image: postgres:15.0
+    container_name: test-database
+    ports:
+      -  5435:5432 #{port in host(myPC)} : {port in Container}
+    # environment variables, like:db's username, password...
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Abc123456789
+      POSTGRES_DB: testdb
+    networks:
+      - nestjs-network
+networks:
+  nestjs-network:
+#Create container, network,... from"docker composer" file:
+#-d: deamon/background mode
+#docker compose up -d
